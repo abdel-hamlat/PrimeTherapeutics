@@ -2,14 +2,19 @@ pipeline {
   agent any
   tools { jdk 'jdk17'; maven 'maven3' }
   options { timestamps() }
+
+  triggers {
+    cron('0 4 * * *')   // run at exactly 04:00 AM every day
+  }
+
   environment {
     PLAYWRIGHT_BROWSERS_PATH = '.playwright'
     MVN_COMMON = '-B -Dmaven.repo.local=.m2/repo --no-transfer-progress'
   }
+
   stages {
     stage('Checkout') {
       steps {
-        // If you configure "Shallow clone" in the Git section of the job UI, that helps too
         checkout scm
       }
     }
@@ -36,6 +41,7 @@ pipeline {
       }
     }
   }
+
   post {
     always {
       junit 'target/surefire-reports/*.xml'

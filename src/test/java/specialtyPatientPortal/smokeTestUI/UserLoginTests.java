@@ -10,11 +10,12 @@ import specialtyPatientPortal.PatientUser;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserLoginTests {
-
+    String inValidEmail;
+    String inValidPassword;
+    String loginFailedError;
     private final PatientPortalBase pBase = new PatientPortalBase();
     PatientUser user = new PatientUser();
-    String inValidEmail = "Invalid@gmail.com";
-    String inValidPassword = "QA1234567";
+
 
     @BeforeAll
     void suiteSetup() {
@@ -22,6 +23,10 @@ public class UserLoginTests {
         pBase.newPageMaximized();
         pBase.patientNavTo();
         pBase.clickPatientLoginLink();
+
+        inValidEmail = "Invalid@gmail.com";
+        inValidPassword = "QA1234567";
+        loginFailedError = "Login Failed. Please remember that passwords are case sensitive.";
 
     }
 
@@ -45,7 +50,7 @@ public class UserLoginTests {
         pBase.enterEmailAddress(inValidEmail);
         pBase.enterPassword(inValidPassword);
         pBase.clickLoginButton();
-        Assertions.assertEquals("Login Failed. Please remember that passwords are case sensitive.", pBase.getUnsuccessfulLoginError());
+        Assertions.assertEquals(loginFailedError, pBase.getUnsuccessfulLoginError());
     }
 
     @Test
@@ -55,7 +60,7 @@ public class UserLoginTests {
         pBase.enterEmailAddress(inValidEmail);
         pBase.enterPassword(user.getPassword());
         pBase.clickLoginButton();
-        Assertions.assertEquals("Login Failed. Please remember that passwords are case sensitive.", pBase.getUnsuccessfulLoginError());
+        Assertions.assertEquals(loginFailedError, pBase.getUnsuccessfulLoginError());
     }
 
     @Test
@@ -65,7 +70,7 @@ public class UserLoginTests {
         pBase.enterEmailAddress(user.getEmail());
         pBase.enterPassword(inValidPassword);
         pBase.clickLoginButton();
-        Assertions.assertEquals("Login Failed. Please remember that passwords are case sensitive.", pBase.getUnsuccessfulLoginError());
+        Assertions.assertEquals(loginFailedError, pBase.getUnsuccessfulLoginError());
     }
 
     @AfterAll
