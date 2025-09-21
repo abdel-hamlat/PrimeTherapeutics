@@ -1,6 +1,5 @@
 package specialtyPatientPortal.smokeTestUI;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import specialtyPatientPortal.PatientPortalBase;
 import specialtyPatientPortal.PatientUser;
@@ -10,7 +9,7 @@ import specialtyPatientPortal.PatientUser;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserLoginTest {
+public class UserLoginTests {
 
     private final PatientPortalBase pBase = new PatientPortalBase();
     PatientUser user = new PatientUser();
